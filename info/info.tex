@@ -1,0 +1,116 @@
+\initunifonts
+\chyph                      % české vzory dělení slov
+\fontfam[Pagella]
+% \famvardef\tt{\Schola\setff{-liga;-tlig}\rm} %zmena url fontu
+
+\margins/1 a4 (3,3,3,3)cm   % okraje 3cm ze všech stran pro stranu A4
+\typosize[11/13.5]            % velikost písma 11pt na 13pt řádkování
+\activettchar"              % znak " bude ohraničovat řádkový verbatim
+\hyperlinks\Blue\Blue       % interní odkazy modré, webové odkazy zelené
+% \outlines0                  % klikací obsah po straně PDF prohlížeče
+\parindent=15pt
+% \nopagenumbers
+% \setmathsizes[11/8.4/6]\normalmath
+\load[mte]\enablemte
+\load[vlna]
+
+\tit Scénář, semestrální práce BI-\TeX
+
+Cílem semestrální práce by měl být připravený balíček maker pro formátování scénáře. 
+Uživatel by měl být schopen soustředit se na samotné psaní textů, 
+formátování by mělo probíhat jen za pomocí minimálního počtu předpřipravených příkazů.
+
+\chap Jak vypadá scénář?
+
+\sec Druhy scénářů
+
+Ideální forma scénáře se značně odlišuje podle toho pro jaké médium je určena. Scénárista může k různým formám představení přistupovat odlišně.
+Filmy se s magickou mocí střihu může odehrávat v desítkách různých prostředích a může mít připravené desítky různých prostředí. Divadlo oproti tomu musí být s 
+proměnou scény značně komornější. Pro dramatičtější změnu scény je typicky třeba divadelní přestávky. \cite[scenarcz] 
+
+\medskip\noindent Druhů scénáře tedy rozlišujeme několik:
+
+\begitems
+* Filmový
+* Televizní
+* {\bf Divadelní}
+* Rozhlasový
+* Komiksový
+* Technický
+* Další méně běžné druhy.
+\enditems
+
+\noindent  Filmy navíc scénářů můžou mít v průběhu tvorby několik. Rozdílný scénář totiž potřebuje herec a jiný zase kameraman. 
+Zde se tedy zatím zaměříme na scénář {\bf divadelní}.
+
+\sec Jak vypadá divadelní scénář?
+
+\secc Úvodní stránky
+
+Úvodní strana scénáře by měla obsahovat pouze čistě {\bf název hry} a {\bf jméno autora}. Případně do kraje stránky můžeme doplnit rok vzniku.
+
+Dále může scénář obsahovat {\bf seznam postav} s krátkým popisem ať už vzhledu, charakteru, či role v ději. Obdobně pak může následovat {\bf seznam prostředí}, 
+kde může být uvedený popis obrazů. Především tech, kde třeba dochází k dramatičtější úpravě scény.
+
+Přiložený může být i jednoduchý obsah všech scén a dějství.
+
+\secc Členění divadelní hry \cite[eichler]
+
+Obvykle se divadelní hra člení do několika {\bf dějství} (případně {\it jednání, či aktů}). Zpravidla jich bývá do tří, maximálně pěti. Během střídání jsou obvykle přestávky
+pro složitější přestavbu scény. Dějství jsou basicly dobrovolný. Typicky stačí scény.
+
+Dějství se potom dělí do dalších menších navazujících celků, do {\bf scén či obrazů}. Mezi scénami
+nedochází k přerušení.
+
+Samotný děj potom posouvají především monology a dialogy postav. 
+Ty společně s popisy scén a chování postav tvoří jádro obsahu scénáře.
+
+\secc Způsob psaní
+
+Samotné scény by potom měli být měli být přehledně formátovány. {\bf Tučně} můžeme zvýraznit nadpisy scén, či určení prostředí,
+ve kterém se vyskytujeme. {\it Kurzívou} by pak mělo být psáno vše, co není přímá řeč. CAPSLOCKEM (případně tučně) píšeme jména postav.
+
+\secc Dialogy
+
+Dialogy (a monology) píšeme na stejný řádek jako jméno postavy. Za jménem může být dvojtečka. Řeč by také měla být od jména postavy patřičně odsazená, aby nehledě na délku
+jména tvořila vlastní sloupec. Popisujeme-li chování právě řečnící postavy, pak popis můžeme vložit přímo do dialogu. Držíme se {\it kurzívy} a vložíme popis do závorek.
+
+Popisujeme-li {\bf chování} jiné postavy, či cokoliv jiného, pak závorky vynecháme a vložíme událost na nový řádek. Zde nedodržujeme rozdělení na sloupce. Popis se roztáhne na celou stránku.
+Typicky zarovnaný buď do prava, nebo centrované.
+
+Pro přehlednost mezi replikami vynecháváme jeden řádek.  
+
+\sec Standartni fonty 
+Alespoň filmové scénáře se pevně drží fontu Courier12. \cite[indufont]
+
+\chap Co tedy naprogramovat?
+
+\sec Speciální stránky
+
+\begitems
+* Úvodní stránka - název, autor, datum
+* Postavy - výpis postav s krátkým popisem
+* Prostředí - výpis prostředí s krátkým popisem
+* Obsah
+\enditems
+
+\sec Členění scénáře
+
+\begitems
+* Dějství
+* Scény
+\enditems
+
+\sec Textová pole 
+
+\begitems
+* Popis scény osamoceně
+* Popis scény v replice
+* Replika - postava + text
+\enditems
+
+\chap Zdroje
+
+\usebib/c (iso690) zdroje.bib
+
+\bye

@@ -1,2 +1,2 @@
-# optex-scenar
-Scénář pro OpTeX -- Semestrální práce pro BI-TEX
+# Scénář pro OpTeX
+Semestrální práce pro BI-TEX
