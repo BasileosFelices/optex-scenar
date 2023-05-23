@@ -1,0 +1,10 @@
+% various utilities used during developement
+% coloron from optex doc
+
+\def\coloron#1#2#3{%
+    \setbox0=\hbox{#2#3}%
+    \leavevmode \rlap{#1\strut \vrule width\wd0}\box0
+}
+% \def\rep#1:#2\par{  \leavevmode\coloron\Cyan\Red{\hbox to 5em{#1\hfil}}%
+%                     \hangindent=5em\hangafter=1%
+%                     #2\par}

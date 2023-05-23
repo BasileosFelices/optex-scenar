@@ -1,28 +1,62 @@
 ﻿\load[makra]
+\load[mriezka]
 
-Pomáda
+% \grid 0.5cm,\bigskipamount(\hoffset,\voffset,\hsize,\vsize)
 
-Postavy
+\newcount\scenenum
+\scenenum=1
+\def\_sceneheadprint{Scéna \the\scenenum \advance\scenenum by 1}
 
-Vypsané postavy i s obrázky, aby všichni věděli o koho jde najdete
+\eoldef\scene#1{%
+    {\typosize[16/20]
+    \_sceneheadprint 
+    \if;#1;
+        \else \ -- #1 
+        \fi 
+    \relax}
+} 
 
-        TADY
 
-Scéna 1 – na pláži 
 
-\rep{SANDY}                 Danny. jedu do Austrálie, bojím se, že už tě nikdy neuvidím. 
+% Pomáda
+% Postavy   
 
-\rep{DANNY}                 Nemluv tak Sandy. 
+% Vypsané postavy i s obrázky, aby všichni věděli o koho jde najdete
 
-\rep{SANDY}                 Je to pravda. To bylo to nejlepší léto mého života.                         (Danny chce Sandy políbit) Danny, co to děláš, pusť mě! Nekaz to!
+%         TADY
 
-\rep{DANNY}                  Sandy, já to jen vylepšuji. 
+\scene na pláži
 
-\rep{SANDY}                 Danny, odjíždím, znamená to tedy konec?
+\rep SANDY: Danny. jedu do Austrálie, bojím se, že už tě nikdy neuvidím. 
 
-\rep{DANNY}                  Samozřejmě že ne. Tohle je začátek. 
+\rep DANNY: Nemluv tak Sandy.   
 
-\vskip10cm
+\rep SANDY: Je to pravda. To bylo to nejlepší léto mého života. \pop {Danny chce Sandy políbit} Danny, co to děláš, pusť mě! Nekaz to!
+
+\rep daNny: Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. 
+
+\rep sanDy: Danny, odjíždím, znamená to tedy konec?
+
+\rep DaNny: Samozřejmě že ne. Tohle je teprve začátek. 
+
+\scene
+
+\pop{Čeněk zdešeně vybíhá z poza rohu.}
+
+\rep čeněk bláha: Ty jseš ale jelito!
+
+\rep daNny: Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. 
+
+\rep daNny: Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. 
+
+\rep daNny: Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. 
+Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji.
+Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji.
+
+\rep daNny: Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. 
+
+
+\bye
 
 (píseň Pomáda)
 

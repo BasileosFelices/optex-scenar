@@ -4,15 +4,29 @@
 % \frenchspacing % chyph to asi dela sam
 \fontfam[newcm]
 % \famvardef\tt{\Schola\setff{-liga;-tlig}\rm} %zmena url fontu
-\margins/1 a4 (3,3,3,3)cm   % okraje 3cm ze všech stran pro stranu A4
-\typosize[11/13.5]            % velikost písma 11pt na 13pt řádkování
+\margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 3cm ze všech stran pro stranu A4
+\typosize[12/16]            % velikost písma 11pt na 13pt řádkování
 \activettchar"              % znak " bude ohraničovat řádkový verbatim
 \hyperlinks\Blue\Blue       % interní odkazy modré, webové odkazy zelené
 % \outlines0                  % klikací obsah po straně PDF prohlížeče
-\parindent=15pt
+\parindent=0pt
 % \nopagenumbers
 % \setmathsizes[11/8.4/6]\normalmath
 \load[mte]\enablemte
 \load[vlna]
 
-\def\rep #1#2\par{\hbox to 4cm{#1} {#2}\par}
+
+\parskip=\bigskipamount
+
+% Definition of \pop
+% Description of events in cursive
+\def\pop#1{\medskip{\it #1}\medskip}
+
+% Definition of \rep
+% Dialoge 
+\newdimen\repindent
+\repindent=4.5cm
+\def\rep#1:#2\par{ {\def\pop##1{ {\it (##1)} }%
+                    \leavevmode\hbox to \the\repindent {\uppercase{#1}\hfil}%
+                    \hangindent=\the\repindent\hangafter=1%
+                    #2\par }}
