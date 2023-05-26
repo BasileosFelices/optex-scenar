@@ -1,20 +1,38 @@
 ﻿\load[makra]
-% \load[mriezka]
-% \grid 0.5cm,\bigskipamount(\hoffset,\voffset,\hsize,\vsize)
+\load[mriezka]
+\grid 0.5cm,\bigskipamount(\hoffset,\voffset,\hsize,\vsize)
 
+% \def\
 
-\newcount\scenenum
+\global\newcount\scenenum
 \scenenum=1
-\def\_sceneheadprint{Scéna \the\scenenum \advance\scenenum by 1}
+\def\_sceneheadprint{Scéna \the\scenenum \global\advance\scenenum by 1}
 
 \eoldef\scene#1{%
-    {\typosize[16/20]
+    \removelastskip\bigbreak
+    {\typosize[16/24]
     \_sceneheadprint 
-    \if;#1;
+    \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
         \else \ -- #1 
         \fi 
-    \relax}
+    \par
+    \nobreak\medskip}
 } 
+
+\global\newcount\actnum
+\actnum=1
+\def\_actheadprint{Dějství \the\scenenum \global\advance\scenenum by 1}
+
+\eoldef\act#1{
+    \vfill\break
+    {\typosize[16/24]
+     \_actheadprint
+     \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
+        \else \ -- #1 
+        \fi 
+    \par
+    \nobreak\medskip}
+}
 
 % Pomáda
 % Postavy   
@@ -22,6 +40,7 @@
 % Vypsané postavy i s obrázky, aby všichni věděli o koho jde najdete
 
 %         TADY
+\act Seznámení postav
 
 \scene na pláži
 
@@ -53,29 +72,31 @@ Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vy
 
 \rep daNny: Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. Sandy, já to jen vylepšuji. 
 
+\pop píseň Pomáda
+
+
+
+\act Ve škole
+
+\scene Pred skolou, svacina
+
+\pop všichni přicházejí ke škole a potkávají se
+
+\pop kluci si hází se Sonnyho svačinou
+
+\rep SONNY:        Dejte mi to, no tak, kluci.
+
+\rep DOODY:        To není k jídlu tohle, měl bys to radši zakopat.
+
+\rep SONNY:        Hej, to je oběd z domova.
+
+\rep PUTZIE:        Máma kvůli tobě vytáhla svoji kostru z postele?
+
+\pop Kenickie se objevuje na scéně, baví se s holkama
+
+\rep TRIO:       \pop{Postupně} Kenickie! Hej!
 
 \bye
-
-(píseň Pomáda)
-
-Scéna 2 – před školou (5:00)
-
-(všichni přicházejí ke škole a potkávají se)
-
-(kluci si hází se Sonnyho svačinou)
-
-SONNY        Dejte mi to, no tak, kluci. 
-
-DOODY        To není k jídlu tohle, měl bys to radši zakopat.
-
-SONNY        Hej, to je oběd z domova.
-
-PUTZIE        Máma kvůli tobě vytáhla svoji kostru z postele?
-
-(Kenickie se objevuje na scéně, baví se s holkama)
-
-TRIO        (Postupně) Kenickie! Hej!
-
 PUTZIE        Kde si byl celý léto?
 
 KENICKIE        Jsi snad moje matka?
