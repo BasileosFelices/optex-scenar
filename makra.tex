@@ -5,7 +5,7 @@
 \fontfam[newcm]
 % \famvardef\tt{\Schola\setff{-liga;-tlig}\rm} %zmena url fontu
 \margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 3cm ze všech stran pro stranu A4
-\typosize[12/16]            % velikost písma 11pt na 13pt řádkování
+\typosize[12/24]            % velikost písma 11pt na 13pt řádkování
 \activettchar"              % znak " bude ohraničovat řádkový verbatim
 \hyperlinks\Blue\Blue       % interní odkazy modré, webové odkazy zelené
 % \outlines0                  % klikací obsah po straně PDF prohlížeče
@@ -16,11 +16,11 @@
 \load[vlna]
 
 
-\parskip=\bigskipamount
+% \parskip=\bigskipamount
 
 % Definition of \pop
 % Description of events in cursive
-\def\pop#1{\medskip{\it #1}\medskip}
+\def\pop#1\par{\medskip{\it #1}\medskip}
 
 % Definition of \rep
 % Dialoge 
