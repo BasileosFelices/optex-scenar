@@ -2,6 +2,20 @@
 % \load[mriezka]
 % \grid 0.5cm,\bigskipamount(\hoffset,\voffset,\hsize,\vsize)
 
+
+\newcount\scenenum
+\scenenum=1
+\def\_sceneheadprint{Scéna \the\scenenum \advance\scenenum by 1}
+
+\eoldef\scene#1{%
+    {\typosize[16/20]
+    \_sceneheadprint 
+    \if;#1;
+        \else \ -- #1 
+        \fi 
+    \relax}
+} 
+
 % Pomáda
 % Postavy   
 
