@@ -41,8 +41,8 @@
 % Changes \pop inside to include ()
 \_newdimen\.repindent
 \.repindent=3.5cm
-\_def\.rep#1:#2\par{ {\_def\.pop##1{{\_it(##1)}}%
-                        \_nspublic \pop ;
+\_def\.rep#1:#2\par{ {\_def\pop##1{{\_it(##1)}}%
+                        % \_nspublic \scenar_pop ;
                     \_leavevmode\_hbox to \_the\.repindent {\_uppercase{#1}\_hfil}%
                     \_hangindent=\_the\.repindent\_hangafter=1%
                     #2\par}}
