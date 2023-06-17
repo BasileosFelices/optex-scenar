@@ -1,6 +1,8 @@
 ﻿\load[makra]
 \load[mriezka]
-\grid 0.5cm,\bigskipamount(\hoffset,\voffset,\hsize,\vsize)
+% \grid 0.5cm,\bigskipamount(\hoffset,\voffset,\hsize,\vsize)
+
+\initscript
 
 % \def\
 
@@ -10,22 +12,22 @@
 
 \eoldef\scene#1{%
     \removelastskip\bigbreak
-    {\typosize[16/24]
+    {\typosize[14/22]
     \_sceneheadprint 
     \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
         \else \ -- #1 
         \fi 
     \par
-    \nobreak\medskip}
+    \nobreak\vskip0pt}
 } 
 
 \global\newcount\actnum
 \actnum=1
-\def\_actheadprint{Dějství \the\scenenum \global\advance\scenenum by 1}
+\def\_actheadprint{Dějství \the\actnum \global\advance\scenenum by 1}
 
 \eoldef\act#1{
     \vfill\break
-    {\typosize[16/24]
+    {\typosize[14/22]
      \_actheadprint
      \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
         \else \ -- #1 
@@ -42,7 +44,7 @@
 %         TADY
 \act Seznámení postav
 
-\scene na pláži
+\scene Na pláži
 
 \rep SANDY: Danny. jedu do Austrálie, bojím se, že už tě nikdy neuvidím. 
 
@@ -55,6 +57,18 @@
 \rep sanDy: Danny, odjíždím, znamená to tedy konec?
 
 \rep DaNny: Samozřejmě že ne. Tohle je teprve začátek. 
+
+\scene Ve třídě 
+
+\rep BLANCH:            Pozor hlášení ! \pop {do megafonu, pak ho předá ředitelce}
+
+\rep ŘEDITELKA:                  Dobré ráno hoši a dívky! Vítejte do nového školního roku.
+    Dnes večer se bude konat naše první sešlost. Doufám, že vás tam  uvidím všechny. A kdo nebude sportovat, bude sportovním fanouškem. A  teď opravdová novinka!  
+
+\rep BLANCH:            \pop {nevydrží to a vytrhne ředitelce megafon} Na naší škole proběhne velká taneční soutěž  a vítězové nás budou reprezentovat na jiných školách!
+
+\rep ŘEDITELKA:        \pop {vezme zpět ředitelce megafon} Máte možnost ukázat jaká jste slušná, nadaná, vzdělaná a zdravá mládež. \pop {Patty vytáhne z tašky umělého pavouka a s jekotem utíká pryč. Danny a Kenickie se tomu smějí}      
+
 
 \scene
 

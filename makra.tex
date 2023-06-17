@@ -1,32 +1,41 @@
 \useoptex
-\initunifonts
-\chyph                      % české vzory dělení slov
-% \frenchspacing % chyph to asi dela sam
-\fontfam[newcm]
-% \famvardef\tt{\Schola\setff{-liga;-tlig}\rm} %zmena url fontu
-\margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 3cm ze všech stran pro stranu A4
-\typosize[12/24]            % velikost písma 11pt na 13pt řádkování
-\activettchar"              % znak " bude ohraničovat řádkový verbatim
-\hyperlinks\Blue\Blue       % interní odkazy modré, webové odkazy zelené
-% \outlines0                  % klikací obsah po straně PDF prohlížeče
-\parindent=0pt
-% \nopagenumbers
-% \setmathsizes[11/8.4/6]\normalmath
-\load[mte]\enablemte
-\load[vlna]
 
+\def\initscript{
+    \initunifonts               
+    \chyph                      % české vzory dělení slov
+    \fontfam[source pro]
+    \margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 2.5 cm, strana A4
+    \typosize[12.5/20]
+    \activettchar"
+    \hyperlinks\Blue\Blue
+    \parindent=0pt
+    \load[mte]\enablemte
+    \load[vlna]
+    \parskip\smallskipamount
+    \parskip\medskipamount
 
-% \parskip=\bigskipamount
+    % \elight\rm
+    % \light\rm
+    % \rm
+    % \light\bf
+    % \sans\light\rm
+    % \sans\rm
+
+    % \ttset\rm
+% % 
+    % \rightskip = 0pt plus1fill
+}
 
 % Definition of \pop
 % Description of events in cursive
 \def\pop#1\par{\medskip{\it #1}\medskip}
 
 % Definition of \rep
-% Dialoge 
+% Dialogue
+% Changes \pop inside to include ()
 \newdimen\repindent
-\repindent=4.5cm
-\def\rep#1:#2\par{ {\def\pop##1{ {\it (##1)} }%
+\repindent=3.5cm
+\def\rep#1:#2\par{ {\def\pop##1{{\it(##1)}}%
                     \leavevmode\hbox to \the\repindent {\uppercase{#1}\hfil}%
                     \hangindent=\the\repindent\hangafter=1%
                     #2\par }}
