@@ -6,35 +6,7 @@
 
 % \def\
 
-\global\newcount\scenenum
-\scenenum=1
-\def\_sceneheadprint{Scéna \the\scenenum \global\advance\scenenum by 1}
 
-\eoldef\scene#1{%
-    \removelastskip\bigbreak
-    {\typosize[14/22]
-    \_sceneheadprint 
-    \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
-        \else \ -- #1 
-        \fi 
-    \par
-    \nobreak\vskip0pt}
-} 
-
-\global\newcount\actnum
-\actnum=1
-\def\_actheadprint{Dějství \the\actnum \global\advance\scenenum by 1}
-
-\eoldef\act#1{
-    \vfill\break
-    {\typosize[14/22]
-     \_actheadprint
-     \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
-        \else \ -- #1 
-        \fi 
-    \par
-    \nobreak\medskip}
-}
 
 % Pomáda
 % Postavy   

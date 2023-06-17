@@ -26,9 +26,13 @@
     % \rightskip = 0pt plus1fill
 }
 
+% --------------------------------------------------------
+
 % Definition of \pop
 % Description of events in cursive
 \def\pop#1\par{\medskip{\it #1}\medskip}
+
+% --------------------------------------------------------
 
 % Definition of \rep
 % Dialogue
@@ -39,3 +43,40 @@
                     \leavevmode\hbox to \the\repindent {\uppercase{#1}\hfil}%
                     \hangindent=\the\repindent\hangafter=1%
                     #2\par }}
+
+
+% --------------------------------------------------------
+% \scene, print Scene with possible name
+
+\global\newcount\scenenum
+\scenenum=1
+\def\_sceneheadprint{Scéna \the\scenenum \global\advance\scenenum by 1}
+
+\eoldef\scene#1{%
+    \removelastskip\bigbreak
+    {\typosize[14/22]
+    \_sceneheadprint 
+    \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
+        \else \ -- #1 
+        \fi 
+    \par
+    \nobreak\vskip0pt}
+} 
+
+% --------------------------------------------------------
+% \act print new act on new page with possible name
+
+\global\newcount\actnum
+\actnum=1
+\def\_actheadprint{Dějství \the\actnum \global\advance\scenenum by 1}
+
+\eoldef\act#1{
+    \vfill\break
+    {\typosize[14/22]
+     \_actheadprint
+     \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
+        \else \ -- #1 
+        \fi 
+    \par
+    \nobreak\medskip}
+}
