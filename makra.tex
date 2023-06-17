@@ -1,18 +1,20 @@
 \useoptex
 
-\def\initscript{
-    \initunifonts               
+\_namespace{scenar}
+
+
+\_def\.beginscenar{
+    \_initunifonts               
     \chyph                      % české vzory dělení slov
-    \fontfam[source pro]
-    \margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 2.5 cm, strana A4
-    \typosize[12.5/20]
-    \activettchar"
-    \hyperlinks\Blue\Blue
-    \parindent=0pt
-    \load[mte]\enablemte
-    \load[vlna]
-    \parskip\smallskipamount
-    \parskip\medskipamount
+    \_fontfam[source pro]
+    \_margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 2.5 cm, strana A4
+    \_typosize[12/20]
+    \_activettchar"
+    \_hyperlinks\Blue\Blue
+    \_parindent=0pt
+    \_load[vlna]
+    \_parskip\smallskipamount
+    \_parskip\medskipamount
 
     % \elight\rm
     % \light\rm
@@ -30,53 +32,59 @@
 
 % Definition of \pop
 % Description of events in cursive
-\def\pop#1\par{\medskip{\it #1}\medskip}
+\_def\.pop#1\par{\_medskip{\_it #1\par}\_medskip}
 
 % --------------------------------------------------------
 
 % Definition of \rep
 % Dialogue
 % Changes \pop inside to include ()
-\newdimen\repindent
-\repindent=3.5cm
-\def\rep#1:#2\par{ {\def\pop##1{{\it(##1)}}%
-                    \leavevmode\hbox to \the\repindent {\uppercase{#1}\hfil}%
-                    \hangindent=\the\repindent\hangafter=1%
-                    #2\par }}
+\_newdimen\.repindent
+\.repindent=3.5cm
+\_def\.rep#1:#2\par{ {\_def\.pop##1{{\_it(##1)}}%
+                        \_nspublic \pop ;
+                    \_leavevmode\_hbox to \_the\.repindent {\_uppercase{#1}\_hfil}%
+                    \_hangindent=\_the\.repindent\_hangafter=1%
+                    #2\par}}
 
 
 % --------------------------------------------------------
 % \scene, print Scene with possible name
 
-\global\newcount\scenenum
-\scenenum=1
-\def\_sceneheadprint{Scéna \the\scenenum \global\advance\scenenum by 1}
+\global\newcount\.scenenum
+\.scenenum=1
+\_def\.sceneheader{Scéna \_the\.scenenum \global\advance\.scenenum by 1}
 
-\eoldef\scene#1{%
-    \removelastskip\bigbreak
-    {\typosize[14/22]
-    \_sceneheadprint 
+\_eoldef\.scene#1{%
+    \_removelastskip\_bigbreak
+    {\_typosize[14/22]
+    \.sceneheader 
     \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
         \else \ -- #1 
         \fi 
     \par
-    \nobreak\vskip0pt}
+    \nobreak\_vskip0pt}
 } 
 
 % --------------------------------------------------------
 % \act print new act on new page with possible name
 
-\global\newcount\actnum
-\actnum=1
-\def\_actheadprint{Dějství \the\actnum \global\advance\scenenum by 1}
+\global\newcount\.actnum
+\.actnum=1
+\_def\.actheader{Dějství \_the\.actnum \global\advance\.actnum by 1}
 
-\eoldef\act#1{
-    \vfill\break
-    {\typosize[14/22]
-     \_actheadprint
+\_eoldef\.act#1{
+    \_vfill\_break
+    {\_typosize[14/22]
+     \.actheader
      \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
         \else \ -- #1 
         \fi 
     \par
-    \nobreak\medskip}
+    \_nobreak\_medskip}
 }
+
+% Declaring commands to public
+\_nspublic \rep \pop \act \scene \beginscenar ;
+
+\_endnamespace
