@@ -39,31 +39,21 @@
 
 
 % --------------------------------------------------------
-% \scene, print Scene with possible name
+% \act prints Act with possible name
 
-% redefinition of chapX - we do not reset scene counters in new acts
-\_def \_chapx {\_secx\_lfnotenum=0}
-% \_def \_secx {\_seccx \_seccnum=0 \_tnum=0 \_fnum=0 \_dnum=0 \_resetABCDE }
-% \_def \_seccx {}
-
-% redefinition of _thesecnum / We dont wanto to print act number
-% \_def \_thechapnum {\_the\_chapnum}
-\_def \_thesecnum {\_the\_secnum}
-
-% Redefinition of Kapitola to Destvi
-\_sdef{_mt:chap:cs}{Dějství}
+% definiton of \act - converts to \chap
+\_eoldef\.act#1{%
+    \_inchap{#1}%
+}
 
 % redefinition of Headers fonts - removed \_boldify
 \_def \_chapfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]}
-\_def \_secfont {\_scalemain\_typoscale[\_magstep2/\_magstep2]}
 
-% redefinition of sec printing - Includes 'scena'
-\_def\_printsec#1{\_par
-    \_abovetitle{\_penalty-151}\_bigskip
-    {\_secfont \_noindent \_raggedright \_printrefnum[Scéna @\_if$#1$\_else\_enskip---\_enskip\_fi]#1\_nbpar}\_insertmark{#1}%
-    \_nobreak \_belowtitle{\_medskip}%
-    \_firstnoindent
-}
+% redefinition of chapX - we do not reset scene counters in new acts
+\_def \_chapx {\_secx\_lfnotenum=0}
+
+% Redefinition of Kapitola to Destvi
+\_sdef{_mt:chap:cs}{Dějství}
 
 % redefinition of \printchap - smaller belotitle skip; removed upper glue 
 \_def\_printchap #1{\_vfill\_supereject \_prevdepth=0pt
@@ -74,16 +64,29 @@
     \_nobreak \_belowtitle{\_smallskip}%
 }
 
+% --------------------------------------------------------
+% \scene prints scene with possible name
+
 % definiton of \scene - converts to \sec
 \_eoldef\.scene#1{%
     \_insec{#1}%
 } 
 
-% \act print new act on new page with possible name
-% definiton of \act - converts to \chap
-\_eoldef\.act#1{%
-    \_inchap{#1}%
+% redefinition of Headers fonts - removed \_boldify
+\_def \_secfont {\_scalemain\_typoscale[\_magstep2/\_magstep2]}
+
+% redefinition of _thesecnum / We dont wanto to print act number
+% \_def \_thechapnum {\_the\_chapnum}
+\_def \_thesecnum {\_the\_secnum}
+
+% redefinition of sec printing - Includes 'scena'
+\_def\_printsec#1{\_par
+    \_abovetitle{\_penalty-151}\_bigskip
+    {\_secfont \_noindent \_raggedright \_printrefnum[Scéna @\_if$#1$\_else\_enskip---\_enskip\_fi]#1\_nbpar}\_insertmark{#1}%
+    \_nobreak \_belowtitle{\_medskip}%
+    \_firstnoindent
 }
+
 % --------------------------------------------------------
 
 % Declaring commands to public
