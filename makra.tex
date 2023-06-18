@@ -9,21 +9,12 @@
     \_margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 2.5 cm, strana A4
     \_typosize[12/20]
     \_activettchar"
-    \_hyperlinks\_Blue\_Blue
+    % \_hyperlinks\Blue\Green % should be removed - screenplay is inteded for printing
     \_parindent=0pt
     \_load[vlna]
-    % \_parskip\_smallskipamount
-    \_parskip\_medskipamount
-
-    % \elight\rm
-    % \light\rm
-    % \rm
-    % \light\bf
-    % \sans\light\rm
-    % \sans\rm
-
-    % \ttset\rm
-% % 
+    \_parskip\_smallskipamount
+    % \_parskip\_medskipamount
+    
     % \rightskip = 0pt plus1fill
 }
 
@@ -31,7 +22,7 @@
 
 % Definition of \pop
 % Description of events in cursive
-\_def\.pop#1\par{\_medskip{\_it #1\par}\_medskip}
+\_def\.pop#1\par{\_medskip{\_it #1\_par}\_medskip}
 
 % --------------------------------------------------------
 
@@ -50,30 +41,54 @@
                         \_nsprivate \pop ;
                     \_leavevmode\_hbox to \_the\.repindent {\_uppercase{#1}\_hfil}%
                     \_hangindent=\_the\.repindent\_hangafter=1%
-                    #2\par}}
+                    #2\_par}}
 
 
 % --------------------------------------------------------
 % \scene, print Scene with possible name
 
 % redefinition of chapX - we do not reset scene counters in new acts
-\_def \_chapx {\_secx \_lfnotenum=0 }
+\_def \_chapx {\_secx\_lfnotenum=0}
 % \_def \_secx {\_seccx \_seccnum=0 \_tnum=0 \_fnum=0 \_dnum=0 \_resetABCDE }
 % \_def \_seccx {}
 
-% redefinition of _thesecnum 
+% redefinition of _thesecnum / We dont wanto to print act number
 % \_def \_thechapnum {\_the\_chapnum}
-\_def \_thesecnum {Scéna \_the\_secnum}
+\_def \_thesecnum {\_the\_secnum}
 
+% Redefinition of Kapitola to Destvi
+\_sdef{_mt:chap:cs}{Dějství}
+
+% redefinition of Headers fonts - removed \_boldify
+\_def \_chapfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]}
+\_def \_secfont {\_scalemain\_typoscale[\_magstep2/\_magstep2]}
+
+% redefinition of sec printing - Includes 'scena'
+\_def\_printsec#1{\_par
+    \_abovetitle{\_penalty-151}\_bigskip
+    {\_secfont \_noindent \_raggedright \_printrefnum[Scéna @\_if$#1$\_else\_enskip---\_enskip\_fi]#1\_nbpar}\_insertmark{#1}%
+    \_nobreak \_belowtitle{\_medskip}%
+    \_firstnoindent
+}
+
+% redefinition of \printchap - smaller belotitle skip; removed upper glue 
+\_def\_printchap #1{\_vfill\_supereject \_prevdepth=0pt
+    % \_topglue\_medskipamount % shifted by topkip+\medskipamount
+    {\_chapfont \_noindent \_mtext{chap} \_printrefnum[@]\_par
+    \_nobreak\_smallskip
+    \_noindent \_raggedright #1\_nbpar}\_mark{}%
+    \_nobreak \_belowtitle{\_smallskip}%
+}
+
+% definiton of \scene - converts to \sec
 \_eoldef\.scene#1{%
-    \_insec{#1}
+    \_insec{#1}%
 } 
 
-% --------------------------------------------------------
 % \act print new act on new page with possible name
-
-\_eoldef\.act#1{
-    \_inchap{#1}
+% definiton of \act - converts to \chap
+\_eoldef\.act#1{%
+    \_inchap{#1}%
 }
 % --------------------------------------------------------
 
