@@ -2,7 +2,6 @@
 
 \_namespace{scenar}
 
-
 \_def\.beginscenar{
     \_initunifonts               
     \chyph                      % české vzory dělení slov
@@ -13,7 +12,7 @@
     \_hyperlinks\_Blue\_Blue
     \_parindent=0pt
     \_load[vlna]
-    \_parskip\_smallskipamount
+    % \_parskip\_smallskipamount
     \_parskip\_medskipamount
 
     % \elight\rm
@@ -36,13 +35,19 @@
 
 % --------------------------------------------------------
 
+\_def\_newpublic #1#2{\_unless\_ifx #2\_undefined
+    \_opwarning{\_string#2 is redefined%
+    \_ifx\_pkglabel\_empty \_else\_space by the \_ea\_ignoreit\_pkglabel\_space package\_fi}\_fi
+    #1#2%
+}
+
 % Definition of \rep
 % Dialogue
 % Changes \pop inside to include ()
 \_newdimen\.repindent
 \.repindent=3.5cm
-\_def\.rep#1:#2\par{ {\_def\pop##1{{\_it(##1)}}%
-                        % \_nspublic \scenar_pop ;
+\_def\.rep#1:#2\par{{\_def\pop##1{{\_it(##1)}}%
+                        \_nsprivate \pop ;
                     \_leavevmode\_hbox to \_the\.repindent {\_uppercase{#1}\_hfil}%
                     \_hangindent=\_the\.repindent\_hangafter=1%
                     #2\par}}
@@ -75,14 +80,15 @@
 
 \_eoldef\.act#1{
     \_vfill\_break
-    {\_typosize[14/22]
+    {\_typosize[16/22]
      \.actheader
      \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
         \else \ -- #1 
         \fi 
     \par
-    \_nobreak\_medskip}
+    \_nobreak\_vskip0pt}
 }
+% --------------------------------------------------------
 
 % Declaring commands to public
 \_nspublic \rep \pop \act \scene \beginscenar ;
