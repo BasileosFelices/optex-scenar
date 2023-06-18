@@ -22,16 +22,9 @@
 
 % Definition of \pop
 % Description of events in cursive
-\_def\.pop#1\par{\_medskip{\_it #1\_par}\_medskip}
 \_def\.pop#1\par{\_abovetitle{\_penalty-151}\_smallskip{\_it #1\_par}\_smallskip}
 
 % --------------------------------------------------------
-
-\_def\_newpublic #1#2{\_unless\_ifx #2\_undefined
-    \_opwarning{\_string#2 is redefined%
-    \_ifx\_pkglabel\_empty \_else\_space by the \_ea\_ignoreit\_pkglabel\_space package\_fi}\_fi
-    #1#2%
-}
 
 % Definition of \rep
 % Dialogue
