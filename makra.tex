@@ -56,37 +56,24 @@
 % --------------------------------------------------------
 % \scene, print Scene with possible name
 
-\_global\_newcount\.scenenum
-\.scenenum=1
-\_def\.sceneheader{Scéna \_the\.scenenum \_global\_advance\.scenenum by 1}
+% redefinition of chapX - we do not reset scene counters in new acts
+\_def \_chapx {\_secx \_lfnotenum=0 }
+% \_def \_secx {\_seccx \_seccnum=0 \_tnum=0 \_fnum=0 \_dnum=0 \_resetABCDE }
+% \_def \_seccx {}
+
+% redefinition of _thesecnum 
+% \_def \_thechapnum {\_the\_chapnum}
+\_def \_thesecnum {Scéna \_the\_secnum}
 
 \_eoldef\.scene#1{%
-    \_removelastskip\_bigbreak
-    {\_typosize[14/22]
-    \.sceneheader 
-    \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
-        \else \ -- #1 
-        \fi 
-    \par
-    \_nobreak\_vskip0pt}
+    \_insec{#1}
 } 
 
 % --------------------------------------------------------
 % \act print new act on new page with possible name
 
-\_global\_newcount\.actnum
-\.actnum=1
-\_def\.actheader{Dějství \_the\.actnum \_global\_advance\.actnum by 1}
-
 \_eoldef\.act#1{
-    \_vfill\_break
-    {\_typosize[16/22]
-     \.actheader
-     \if$#1$ % uses $ symbol to determine empty parameter - prayer to all gods no one uses $ here :D
-        \else \ -- #1 
-        \fi 
-    \par
-    \_nobreak\_vskip0pt}
+    \_inchap{#1}
 }
 % --------------------------------------------------------
 
