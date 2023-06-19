@@ -4,7 +4,7 @@
 
 \_def\.beginscenar{
     \_initunifonts               
-    % \chyph                      % české vzory dělení slov
+    \chyph                      % české vzory dělení slov
     \_fontfam[source pro]
     \_margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 2.5 cm, strana A4
     \_typosize[12/20]
@@ -79,6 +79,8 @@
     \_nobreak \_belowtitle{\_smallskip}%
 }
 
+% possible todo: print act numbers roman numerals
+
 % --------------------------------------------------------
 % \scene prints scene with possible name
 
@@ -103,7 +105,7 @@
 % \isempty does not work here ???
 \_def\_printsec#1{\_par
     \_abovetitle{\_penalty-151}\_bigskip
-    {\_secfont \_noindent \_raggedright \_printrefnum[\_mtext{scene} @\_if\_relax#1\_relax\_else\_enskip---\_enskip#1\_fi]\_nbpar}\_insertmark{#1}%
+    {\_secfont \_noindent \_raggedright \_printrefnum[\_mtext{scene} @\_if\_relax#1\_relax\_else\_enskip---\_enskip\_fi]#1\_nbpar}\_insertmark{#1}%
     \_nobreak \_belowtitle{\_medskip}%
     \_firstnoindent
 }
@@ -145,6 +147,24 @@
 }
 
 % --------------------------------------------------------
+% Title page
+
+
+% --------------------------------------------------------
+% Table of content settings
+\_sdef{_mt:toc:cs}{Obsah}
+\_sdef{_mt:toc:en}{Contents}
+
+\_def\.tocpage{
+    
+    \_notoc\_nonum\_sec \_mtext{toc}
+}
+
+% --------------------------------------------------------
+% Character list settings
+
+% --------------------------------------------------------
+
 % Declaring commands to public
 \_nspublic \rep \pop \act \scene \beginscenar ;
 
