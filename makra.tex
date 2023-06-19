@@ -164,7 +164,8 @@
 \_sdef{_mt:basedon:cs}{Dle předlohy}
 \_sdef{_mt:basedon:en}{Based on}
 
-\_def\.titlepage{{
+\_def\.titlepage{\_nopagenumbers
+    {
     \_fontfam[source pro]
     \.titletextfont
     \_vfill\_break
@@ -184,7 +185,9 @@
     \_ifx\.saveddate\_undefined
         \_else \_vglue3cm{\_hfill \.titletextfont \.saveddate \_par}
         \_fi
-}}
+    }
+    \_vfill\_break\_footline={\_hss\_tenrm\_folio\_hss}
+}
 
 \_nspublic \title \subtitle \author \basedon \date \titlepage ;
 
