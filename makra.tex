@@ -15,6 +15,9 @@
     \_parskip\_smallskipamount
     % \_parskip\_medskipamount
     
+    \_newdimen\_scenar_repindent
+    \_scenar_repindent=3.5cm
+
     % \rightskip = 0pt plus1fill
 }
 
@@ -40,8 +43,7 @@
 % Definition of \rep
 % Dialogue
 % Changes \pop inside to include ()
-\_newdimen\.repindent
-\.repindent=3.5cm
+
 \_def\.rep#1:#2\par{{\_def\pop##1{{\_it(##1)}}%
                         \_nsprivate \pop ;
                     \_iitype{h}\_iindex{\.toupper{#1}}% saves character name to character list / iitype is h for hiding loc number
