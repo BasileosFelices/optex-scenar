@@ -17,7 +17,6 @@
     
     \_newdimen\_scenar_repindent
     \_scenar_repindent=3.5cm
-
     % \rightskip = 0pt plus1fill
 }
 
@@ -155,9 +154,39 @@
 \_def\.basedon#1{ \_def\.savedbasedon{#1} }
 \_def\.date#1{ \_def\.saveddate{#1} }
 
-\_def\.titlepage{
-    
-}
+\_def\.titlefont{\light\rm\_scalemain\_typoscale[\_magstep4/\_magstep4]}
+\_def\.subtitlefont{\light\rm\_scalemain\_typoscale[\_magstep2/\_magstep2]}
+\_def\.titletextfont{\light\rm\_scalemain\_typoscale[\_magstep1/\_magstep1]}
+
+\_sdef{_mt:author:cs}{Autor}
+\_sdef{_mt:author:en}{Written by}
+
+\_sdef{_mt:basedon:cs}{Dle předlohy}
+\_sdef{_mt:basedon:en}{Based on}
+
+\_def\.titlepage{{
+    \_fontfam[source pro]
+    \.titletextfont
+    \_vfill\_break
+    \_vglue4.5cm
+    \_centerline{\.titlefont \.savedtitle \_unskip}\_par
+    \_ifx\.savedsubtitle\_undefined
+        \_else \_vglue1cm\_centerline{\.subtitlefont \.savedsubtitle \_unskip}\_par
+        \_fi
+    \_ifx\.savedauthor\_undefined
+        \_else \_vglue2cm\_centerline{\_mtext{author}\_unskip}\_par
+        \_centerline{\.savedauthor\_unskip}\_par
+        \_fi
+    \_ifx\.savedbasedon\_undefined
+        \_else \_vglue2cm\_centerline{\_mtext{basedon}\_unskip}\_par
+        \_centerline{\.savedbasedon\_unskip}\_par
+        \_fi
+    \_ifx\.saveddate\_undefined
+        \_else \_vglue3cm{\_hfill \.titletextfont \.saveddate \_par}
+        \_fi
+}}
+
+\_nspublic \title \subtitle \author \basedon \date \titlepage ;
 
 % --------------------------------------------------------
 % Table of content settings
@@ -207,6 +236,6 @@
 % --------------------------------------------------------
 
 % Declaring commands to public
-\_nspublic \rep \pop \act \scene \beginscenar \tocpage \charlist;
+\_nspublic \rep \pop \act \scene \beginscenar \contentpage \characterpage;
 
 \_endnamespace
