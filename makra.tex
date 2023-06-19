@@ -19,6 +19,16 @@
 }
 
 % --------------------------------------------------------
+% Helper function - converting to uppercase
+% Working with lua to make \toupper expandable unline \uppercase
+
+\_def\.toupper#1{%
+    \_directlua{%
+        tex.print(unicode.utf8.upper(\_unexpanded{"#1"}) )%
+    }%
+}
+
+% --------------------------------------------------------
 
 % Definition of \pop
 % Description of events in cursive
@@ -33,7 +43,8 @@
 \.repindent=3.5cm
 \_def\.rep#1:#2\par{{\_def\pop##1{{\_it(##1)}}%
                         \_nsprivate \pop ;
-                    \_leavevmode\_hbox to \_the\.repindent {\_uppercase{#1}\_hfil}%
+                    \_iindex{\.toupper{#1}}%
+                    \_leavevmode\_hbox to \_the\.repindent {\.toupper{#1}\_hfil}%
                     \_hangindent=\_the\.repindent\_hangafter=1%
                     #2\_par}}
 
@@ -80,6 +91,7 @@
 \_def \_thesecnum {\_the\_secnum}
 
 % redefinition of sec printing - Includes 'scena'
+% In print ref num checks whether #1 is empty, if not prints  --- and #1
 \_def\_printsec#1{\_par
     \_abovetitle{\_penalty-151}\_bigskip
     {\_secfont \_noindent \_raggedright \_printrefnum[Scéna @\_if$#1$\_else\_enskip---\_enskip\_fi]#1\_nbpar}\_insertmark{#1}%
