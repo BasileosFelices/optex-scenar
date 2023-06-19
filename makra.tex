@@ -4,7 +4,7 @@
 
 \_def\.beginscenar{
     \_initunifonts               
-    \chyph                      % české vzory dělení slov
+    % \chyph                      % české vzory dělení slov
     \_fontfam[source pro]
     \_margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 2.5 cm, strana A4
     \_typosize[12/20]
@@ -60,14 +60,15 @@
     \_inchap{#1}%
 }
 
+% Redefinition of Kapitola to Destvi
+\_sdef{_mt:chap:cs}{Dějství}
+\_sdef{_mt:chap:en}{Act}
+
 % redefinition of Headers fonts - removed \_boldify
 \_def \_chapfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]}
 
 % redefinition of chapX - we do not reset scene counters in new acts
 \_def \_chapx {\_secx\_lfnotenum=0}
-
-% Redefinition of Kapitola to Destvi
-\_sdef{_mt:chap:cs}{Dějství}
 
 % redefinition of \printchap - smaller belotitle skip; removed upper glue 
 \_def\_printchap #1{\_vfill\_supereject \_prevdepth=0pt
@@ -86,6 +87,10 @@
     \_insec{#1}%
 } 
 
+% Definition of Scene text in different languages
+\_sdef{_mt:scene:cs}{Scéna}
+\_sdef{_mt:scene:en}{Scene}
+
 % redefinition of Headers fonts - removed \_boldify
 \_def \_secfont {\_scalemain\_typoscale[\_magstep2/\_magstep2]}
 
@@ -98,7 +103,7 @@
 % \isempty does not work here ???
 \_def\_printsec#1{\_par
     \_abovetitle{\_penalty-151}\_bigskip
-    {\_secfont \_noindent \_raggedright \_printrefnum[Scéna @\_if\_relax#1\_relax\_else\_enskip---\_enskip#1\_fi]\_nbpar}\_insertmark{#1}%
+    {\_secfont \_noindent \_raggedright \_printrefnum[\_mtext{scene} @\_if\_relax#1\_relax\_else\_enskip---\_enskip#1\_fi]\_nbpar}\_insertmark{#1}%
     \_nobreak \_belowtitle{\_medskip}%
     \_firstnoindent
 }
