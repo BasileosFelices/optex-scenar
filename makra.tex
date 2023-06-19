@@ -1,5 +1,8 @@
-\useoptex
+% This is macro package desinged for OpTeX, see http://petr.olsak.net/optex
+% scenar.opm, Filip Spelina, 2023
 
+\_def\_scenar_version{1.0, 2023-06-19}
+\_codedecl \beginscenar {Painless screeplay formatting <\_scenar_version>}
 \_namespace{scenar}
 
 \_def\.beginscenar{
@@ -9,7 +12,7 @@
     \_margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 2.5 cm, strana A4
     \_typosize[12/20]
     \_activettchar"
-    % \_hyperlinks\Blue\Green % should be removed - screenplay is inteded for printing
+    \_hyperlinks\Blue\Green % should be removed - screenplay is inteded for printing
     \_parindent=0pt
     \_load[vlna]
     \_parskip\_smallskipamount
@@ -103,9 +106,9 @@
 % In print ref num checks whether #1 is empty, if not prints  --- and #1
 % \isempty does not work here ???
 \_def\_printsec#1{\_par
-    \_abovetitle{\_penalty-151}\_bigskip
+    \_abovetitle{\_penalty-400}{\_bigskip}
     {\_secfont \_noindent \_raggedright \_printrefnum[\_mtext{scene} @\_if\_relax#1\_relax\_else\_enskip---\_enskip\_fi]#1\_nbpar}\_insertmark{#1}%
-    \_nobreak \_belowtitle{\_medskip}%
+    \_nobreak\_belowtitle{\_medskip}%
     \_firstnoindent
 }
 
@@ -242,3 +245,5 @@
 \_nspublic \rep \pop \act \scene \beginscenar \contentpage \characterpage;
 
 \_endnamespace
+
+\_endcode
