@@ -28,6 +28,10 @@
 % Working with lua to make \toupper expandable unline \uppercase
 % ! Might break if #1 includes " - todo \luaescapestring does not work
 
+    \_doc
+        \`\toupper``{<text>}` converts `text` to uppercase
+    \_cod
+
 \_def\.toupper#1{%
     \_directlua{%
         tex.print(unicode.utf8.upper(\_unexpanded{"#1"}) )%
