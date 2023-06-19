@@ -149,23 +149,64 @@
 % --------------------------------------------------------
 % Title page
 
+\_def\.title#1{ \_def\.savedtitle{#1} }
+\_def\.subtitle#1{ \_def\.savedsubtitle{#1} }
+\_def\.author#1{ \_def\.savedauthor{#1} }
+\_def\.basedon#1{ \_def\.savedbasedon{#1} }
+\_def\.date#1{ \_def\.saveddate{#1} }
+
+\_def\.titlepage{
+    
+}
 
 % --------------------------------------------------------
 % Table of content settings
 \_sdef{_mt:toc:cs}{Obsah}
 \_sdef{_mt:toc:en}{Contents}
 
-\_def\.tocpage{
-    
-    \_notoc\_nonum\_sec \_mtext{toc}
+% Redefines toc levels to include 'scene' and 'act'
+\_sdef{_tocl:1}#1#2#3{\_nofirst\_bigskip
+    \_bf\_llaptoclink{\_mtext{chap} #1}{#2}\_nobreak\_hfill \_pgn{#3}\_tocpar}
+\_sdef{_tocl:2}#1#2#3{\_llaptoclink{\_mtext{scene} #1}{#2}\_tocdotfill\_pgn{#3}\_tocpar}
+
+% Moved left side with kern 1.2cm to keep act and scenes in page layout
+\_def\_llaptoclink#1{\_noindent\_kern1.2cm\_llap{\_ilink[toc:\_the\_tocrefnum]{\_enspace#1\_kern.4em}\_kern.1em}}
+
+% \_def\_tocdotfill{\_nobreak\_leaders\_hbox to1em{\_hss.\_hss}\_hskip 1em plus1fill\_relax}
+
+\_def\.contentpage{
+    {
+        \_vfill\_break
+        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} % Bigger font, matching with Act
+        \_notoc\_nonum\_insec{\_mtext{toc}}
+        \_maketoc
+    }
 }
 
 % --------------------------------------------------------
 % Character list settings
 
+\_sdef{_mt:charlist:cs}{Postavy}
+\_sdef{_mt:charlist:en}{Characters}
+
+\_sdef{_mt:charlistdesc:cs}{Seznam všech postav díla se svou vlastní replikou. Postavy jsou vytištěné v abecedním pořadí.\_bigskip}
+\_sdef{_mt:charlistdesc:en}{List of characters, alphabeticly sorted.\_bigskip}
+
+\_def\.characterpage{
+    {
+        \_vfill\_break % New page
+        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} % Bigger font, matching with Act
+        \_notoc\_nonum\_insec{\_mtext{charlist}} % Page title
+        \_mtext{charlistdesc} % Short description
+        \_begmulti 2 % Two colums
+            \_makeindex
+        \_endmulti
+    }
+}
+
 % --------------------------------------------------------
 
 % Declaring commands to public
-\_nspublic \rep \pop \act \scene \beginscenar ;
+\_nspublic \rep \pop \act \scene \beginscenar \tocpage \charlist;
 
 \_endnamespace
