@@ -21,6 +21,7 @@
 % --------------------------------------------------------
 % Helper function - converting to uppercase
 % Working with lua to make \toupper expandable unline \uppercase
+% ! Might break if #1 includes " - todo \luaescapestring does not work
 
 \_def\.toupper#1{%
     \_directlua{%
@@ -43,7 +44,7 @@
 \.repindent=3.5cm
 \_def\.rep#1:#2\par{{\_def\pop##1{{\_it(##1)}}%
                         \_nsprivate \pop ;
-                    \_iindex{\.toupper{#1}}%
+                    \_iitype{h}\_iindex{\.toupper{#1}}% saves character name to character list / iitype is h for hiding loc number
                     \_leavevmode\_hbox to \_the\.repindent {\.toupper{#1}\_hfil}%
                     \_hangindent=\_the\.repindent\_hangafter=1%
                     #2\_par}}
@@ -92,15 +93,51 @@
 
 % redefinition of sec printing - Includes 'scena'
 % In print ref num checks whether #1 is empty, if not prints  --- and #1
+% \isempty does not work here ???
 \_def\_printsec#1{\_par
     \_abovetitle{\_penalty-151}\_bigskip
-    {\_secfont \_noindent \_raggedright \_printrefnum[Scéna @\_if$#1$\_else\_enskip---\_enskip\_fi]#1\_nbpar}\_insertmark{#1}%
+    {\_secfont \_noindent \_raggedright \_printrefnum[Scéna @\_if\_relax#1\_relax\_else\_enskip---\_enskip#1\_fi]\_nbpar}\_insertmark{#1}%
     \_nobreak \_belowtitle{\_medskip}%
     \_firstnoindent
 }
 
 % --------------------------------------------------------
+% Index adjustments for character list
 
+% redefintes pageprinting so usepgcomma, and usepgdash receive pgtype
+\_def\_printpages#1:#2,{% state automaton for compriming pages
+    \_ifx,#1,\_uselastpgnum
+    \_else \_def\_tmpa{#2}%
+        \_ifx\_pgtype\_tmpa \_else
+            \_let\_pgtype=\_tmpa
+            \_uselastpgnum \_usepgcomma{#2} \_pgprint#1:{#2}%
+            \_tmpnum=#1 \_returnfi \_fi
+        \_ifnum\_tmpnum=#1 \_returnfi \_fi
+        \_advance\_tmpnum by1
+        \_ifnum\_tmpnum=#1  \_ifx\_lastpgnum\_undefined \_usepgdash{#2}\_fi
+                            \_edef\_lastpgnum{\_the\_tmpnum:{\_pgtype}}%
+                            \_returnfi \_fi
+        \_uselastpgnum \_usepgcomma{#2} \_pgprint#1:{#2}%
+        \_tmpnum=#1
+        \_relax
+    \_ea\_printpages \_fi
+}
+
+% Disables printing if type is h
+\_def\_usepgcomma#1{\_ifx h#1\_relax\_else\_ifnum\_tmpnum>0, \_fi\_fi} % comma+space between page numbers
+\_def\_usepgdash#1{\_ifx h#1\_relax\_else\_hbox{--}\_fi} % dash in the <from>--<to> form
+
+% Disables page printing when type is h
+\_def\_pgprint #1:#2{%
+    \_ifx ,#2,\_pgprintA{#1}\_returnfi \_fi
+    \_ifx b#2{\_bf \_pgprintA{#1}}\_returnfi \_fi
+    \_ifx i#2{\_it \_pgprintA{#1}}\_returnfi \_fi
+    \_ifx u#2\_pgu{\_pgprintA{#1}}\_returnfi \_fi
+    \_ifx h#2{\_relax}\_returnfi \_fi
+    \_pgprintA{#1}\_relax
+}
+
+% --------------------------------------------------------
 % Declaring commands to public
 \_nspublic \rep \pop \act \scene \beginscenar ;
 
