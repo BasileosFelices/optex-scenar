@@ -42,7 +42,7 @@
 
 % Definition of \pop
 % Description of events in cursive
-\_def\.pop#1\par{\_abovetitle{\_penalty-151}\_smallskip{\_it #1\_par}\_smallskip}
+\_def\.pop#1\_par{\_abovetitle{\_penalty-151}\_smallskip{\_it #1\_par}\_smallskip}
 
 % --------------------------------------------------------
 
@@ -50,7 +50,7 @@
 % Dialogue
 % Changes \pop inside to include ()
 
-\_def\.rep#1:#2\par{{\_def\pop##1{{\_it(##1)}}%
+\_def\.rep#1:#2\_par{{\_def\pop##1{{\_it(##1)}}%
                         \_nsprivate \pop ;
                     \_iitype{h}\_iindex{\.toupper{#1}}% saves character name to character list / iitype is h for hiding loc number
                     \_leavevmode\_hbox to \_the\.repindent {\.toupper{#1}\_hfil}%
