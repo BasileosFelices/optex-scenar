@@ -41,7 +41,7 @@
     \_cod
 
 \_def\.pop#1\_par{%
-    \_abovetitle{\_penalty-151}\_smallskip%
+    \_par\_abovetitle{\_penalty-151}\_smallskip%
     {\_it #1\_par}%
     \_smallskip%
     }
@@ -61,7 +61,7 @@
 \_def\.rep#1:#2\_par{{\_def\pop##1{{\_it(##1)}}%
                         \_nsprivate \pop ;
                     \_iitype{h}\_iindex{\.toupper{#1}} % save to character list
-                    \_leavevmode\_hbox to \_the\.repindent {\.toupper{#1}\_hfil}%
+                    \_par\_leavevmode\_hbox to \_the\.repindent {\.toupper{#1}\_hfil}%
                     \_hangindent=\_the\.repindent\_hangafter=1%
                     #2\_par}}
 
@@ -309,7 +309,7 @@ First of all you need to include this package with `\load[scenar]`. Afterwards y
 the document format in the reccomended way. That is A4 paper with 2.5cm borders and source pro font family. Implicit 
 screenplay languge is Czech. You may use `\enlang` for switching to English which is also implemented. 
 
-Interesting nontex standart document setting is \^`\repindent``<dimension>` that changes the distance of character names from
+Interesting non\TeX/ standard document setting is \^`\repindent``<dimension>` that changes the distance of character names from
 their dialogue. Currently the maximum charactar name size is around 15 characters. You can safely use this register if necessary.
 `\parskip` register is also utilized for slight spacing between different character lines. This is up to personal preference and
 might be changed. 
@@ -320,28 +320,90 @@ Now our document is finally ready. Usually the script will start with three spec
 
 \^`\titlepage` prints, as the name suggest, title page of script. However, before using this command you have to specify some parameters.
 \begitems\style I
-\^`\title``{<text>}` sets the name of the sript. This is the only mandatory parameter and has to be defined before \~`\titlepage`. 
+* \^`\title``{<text>}` sets the name of the sript. This is the only mandatory parameter and has to be defined before \~`\titlepage`. 
 * \^`\subtitle``{<text>}` provides an option to specify subtitle
 * \^`\author``{<text>}` prints written by `<text>`. If you want to specify more authors please include them all in a single line.
 * \^`\basedon``{<text>}` prints based on `<text>`.
 * \^`\date``{<text>}` prints `<text>` to the left side. Specifying month and day is recommended. 
 \enditems
 
+\bigskip
+
 \^`\characterpage` provides a page with automaticly generated list of characters.
-Anyone `<character>` in \~`\rep``<character>` is displayed here. 
+Any `<character>` in \~`\rep``<character>` is displayed here. 
+
+\bigskip
 
 \^`\contentpage` prepares Table of Contents page with all acts and scenes listed.
 
 \secc Acts and scenes
 
+\^`\act``<text>` starts a new act. `<text>` is optional. Act always starts a new page and is usually followed by a short description
+of events in this act. Acts show in table of content.
 
+\bigskip
 
+\^`\scene``<text>` starts a new scene. Scenes are numbered from 1 regardles of acts. `<text>` is optional. 
+Scenes show in table of content as well.
 
-\~`\rep``<character>``:``<text>`
+\secc Dialogue and event description
+
+\^`\rep``<character>``:``<text>` is a macro used for printing dialogue and probably the most important macro here. Following
+\~`\rep` everything you write till `:` is considered a character name and is placed on the left side. The `<text>` which lasts till the
+end of paragraph (You must make a double enter to end this.) is then placed into the column which starts at a \^`\repindent` distance from 
+left side of the page.
+
+\bigskip
+
+\^`\pop``<text>` meanwhile is used for printing event description and its behavior is dependent on context. When an event is not tied 
+to a specific character then \~`\pop` should be used in a new paragraph and reads `<text>` till the end of an paragraph. Text is then 
+printed in cursive.
+
+However, if \~`\pop``{<text>}` is used in \~`\rep` then text should be enclosed in `{}` parentheses. `<text>` keeps itself as part of the 
+dialogue column but is printed in cursive and enclosed in (). You should use this option to describe events tied to a specific character.
+
+\sec Regarding \OpTeX macros usage
+
+As later described in the implementation section, this package does not use \OpTeX in a read-only manner. Even some private parts and macros are 
+redefined and adjusted here. After all that is the reason why the sections of this documentation are labelled `scenes` even though 
+the usual `\sec` is used. I'd like to comment on why have I decided to do so in a broad manner. The exact changes are documented in \ref[impl].
+
+To start, I find screenplay formatting a rather specific work and the work of this package is a document-type style implementation rather
+than a feature package. I find it highly unlikely anyone would find a use for this code outside of the screenplay formatting it is intended for.
+Therefore chances someone would find my modifications disruptive and hostile for his purposes are low.
+
+First I redefined several declarations used in `\sec` and `\chap`. Acts and scenes are implemented basically as a wrapper for these 
+\OpTeX headers. Considering how similar they were to my envisioned acts and scenes I found a way of redesigning them instead of making 
+completely new headers much simpler and more useful. `\sec` and `\chap` come with built-in support for ToC and references. And already
+almost had a design I needed. So all changes here are pretty much graphical.
+
+The next changed routine is generating a Table of content. Changes here are likewise mostly graphical.
+
+The most controversial part in my eyes is the change to routine regarding the index. While the purpose of previous adjustments remained the same with
+simply different execution. Here I have forced `\makeindex` to make a list of characters instead of an index it is meant to create.
+I am not necessarily happy with this level of twisting the original purpose, however, the benefits were simply too nice to pass up.
+The index automatically catalogues all entries and works as a mathematical set. All same entries are grouped together and even sorted.
+Brilliant qualities that I needed to use.
+
+Still, I believe I managed to make these adjustments maximally nondestructive. Instead of cutting the code completely, I introduced
+a new index type for hiding origin page numbers which is the difference between the original index and the list I needed. Thanks to that 
+classic indexation should still be possible as demonstrated at the end of this documentation.   
 
 \sec Printing documentation
 
-\sec Regarding \OpTeX macros usage
+I have tried to follow \OpTeX documentation and package practices. Meaning this documentation has been and can be generated 
+with the following console command.
+
+\bigskip
+
+`optex -jobname scenar-doc '\docgen scenar`
+
+\bigskip
+
+You should run this command three times in order to properly generate Table of Contents and Index. 
+
+Beware `\docgen` is first included in TeXlive 2023. If you encounter problems please ensure you have last \OpTeX/ version.
+
 
 \sec List of possible updates
 
@@ -365,7 +427,7 @@ Anyone `<character>` in \~`\rep``<character>` is displayed here.
         \notoc\nonum\sec Table of contents
         \maketoc
         \printdoctail scenar.opm % prints the documantation written after \_endcode
-        \sec Implementation
+        \sec[impl] Implementation
         \printdoc scenar.opm % print code + local documentation
         \sec Index
         \begmulti 3
