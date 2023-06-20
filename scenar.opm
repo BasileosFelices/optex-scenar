@@ -68,11 +68,11 @@
 \_nspublic \rep \repindent ;
 
     \_doc
-        \`\act``<act name>` starts new act with with act names which is read till the end of line.
+        \`\act``<act name>` starts new act with with act names which is read till the end of line. Act name is optional.
         Implementation uses \OpTeX `\chap` with several adjustments. We redefine following: 
         `\_chapfont` `\_chapx` `\_printchap` and `\_mtext` definition for chapter header in English and Czech.
         Support for more languages can be easily added, see 
-        \ulink[http://petr.olsak.net/ftp/olsak/optex/optex-doc.pdf#cs%3A_mtext]{\OpTeX documentation}.
+        \ulink[http://petr.olsak.net/ftp/olsak/optex/optex-doc.pdf]{\OpTeX/ documentation}.
     \_cod
 
 \_eoldef\.act#1{%
@@ -101,11 +101,11 @@
 \_nspublic \act ;
 
     \_doc
-        \`\scene``<scene name>` starts new act with with act names which is read till the end of line.
+        \`\scene``<scene name>` starts new act with with act names which is read till the end of line. Scene name is optional.
         Implementation uses \OpTeX `\sec` with several adjustments. We redefine following: 
         `\_secfont` `\_thesecnum` `\_printsec`. We add new `\_mtext{scene}` values for printing scene header in English and Czech.
         Support for more languages can be easily added, see 
-        \ulink[http://petr.olsak.net/ftp/olsak/optex/optex-doc.pdf#cs%3A_mtext]{\OpTeX documentation}.
+        \ulink[http://petr.olsak.net/ftp/olsak/optex/optex-doc.pdf]{\OpTeX/ documentation}.
     \_cod
 
 % definiton of \scene - converts to \sec
@@ -120,12 +120,12 @@
 % redefinition of Headers fonts - removed \_boldify
 \_def \_secfont {\_scalemain\_typoscale[\_magstep2/\_magstep2]}
 
-% redefinition of _thesecnum / We dont wanto to print act number
+% redefinition of _thesecnum / We dont want to print act number
 \_def \_thesecnum {\_the\_secnum}
 
 % redefinition of sec printing - Includes 'scena'
 % In print ref num checks whether #1 is empty, if not prints  --- and #1
-% \isempty does not work here ???
+% \isempty does not work here ?
 \_def\_printsec#1{\_par
     \_abovetitle{\_penalty-400}{\_bigskip}
     {\_secfont \_noindent \_raggedright 
@@ -137,46 +137,13 @@
 
 \_nspublic \scene ;
 
-% --------------------------------------------------------
-% Index adjustments for character list
-
-% redefintes pageprinting so usepgcomma, and usepgdash receive pgtype
-\_def\_printpages#1:#2,{% state automaton for compriming pages
-    \_ifx,#1,\_uselastpgnum
-    \_else \_def\_tmpa{#2}%
-        \_ifx\_pgtype\_tmpa \_else
-            \_let\_pgtype=\_tmpa
-            \_uselastpgnum \_usepgcomma{#2} \_pgprint#1:{#2}%
-            \_tmpnum=#1 \_returnfi \_fi
-        \_ifnum\_tmpnum=#1 \_returnfi \_fi
-        \_advance\_tmpnum by1
-        \_ifnum\_tmpnum=#1  \_ifx\_lastpgnum\_undefined \_usepgdash{#2}\_fi
-                            \_edef\_lastpgnum{\_the\_tmpnum:{\_pgtype}}%
-                            \_returnfi \_fi
-        \_uselastpgnum \_usepgcomma{#2} \_pgprint#1:{#2}%
-        \_tmpnum=#1
-        \_relax
-    \_ea\_printpages \_fi
-}
-
-% Disables printing if type is h
-% comma+space between page numbers
-\_def\_usepgcomma#1{\_ifx h#1\_relax\_else\_ifnum\_tmpnum>0, \_fi\_fi} 
-% dash in the <from>--<to> form
-\_def\_usepgdash#1{\_ifx h#1\_relax\_else\_hbox{--}\_fi} 
-
-% Disables page printing when type is h
-\_def\_pgprint #1:#2{%
-    \_ifx ,#2,\_pgprintA{#1}\_returnfi \_fi
-    \_ifx b#2{\_bf \_pgprintA{#1}}\_returnfi \_fi
-    \_ifx i#2{\_it \_pgprintA{#1}}\_returnfi \_fi
-    \_ifx u#2\_pgu{\_pgprintA{#1}}\_returnfi \_fi
-    \_ifx h#2{\_relax}\_returnfi \_fi
-    \_pgprintA{#1}\_relax
-}
-
-% --------------------------------------------------------
-% Title page
+    \_doc   
+        \`\titlepage` prints an title page with before specified parameters. `source pro` font family is hardcoded here
+        to avoid undefined command sequence: `\light\rm`. 
+        All in all using `\titlepage` when file format is changed is not adviced without editing macros below as well.
+        \`\title``{text}` saves screenplay title. This is the only mandatory parameter. Similarly you can specify following: 
+        \`\subtitle``{text}`, \`\author``{text}`, \`\basedon``{text}` and \`\date``{text}`.
+    \_cod
 
 \_def\.title#1{ \_def\.savedtitle{#1} }
 \_def\.subtitle#1{ \_def\.savedsubtitle{#1} }
@@ -221,7 +188,22 @@
 
 \_nspublic \title \subtitle \author \basedon \date \titlepage ;
 
-% --------------------------------------------------------
+    \_doc   
+        \`\contentpage` prints new page with screenplay content. \OpTeX `\maketoc` is utilized here with
+        adjustments for screenplay. In act and scene numbering we now include language dependent description for scenes and acts.
+        As this breaks page layout whole ToC is also moved 1.2cm to the right. 
+        Page header is language dependent and can be easily edited or new languge definition might be added.
+    \_cod
+
+\_def\.contentpage{
+    {
+        \_vfill\_break
+        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} %big font
+        \_notoc\_nonum\_insec{\_mtext{toc}}
+        \_maketoc
+    }
+}
+
 % Table of content settings
 \_sdef{_mt:toc:cs}{Obsah}
 \_sdef{_mt:toc:en}{Contents}
@@ -233,21 +215,14 @@
 
 % Moved left side with kern 1.2cm to keep act and scenes in page layout
 \_def\_llaptoclink#1{\_noindent\_kern1.2cm%
-    \_llap{\_ilink[toc:\_the\_tocrefnum]{\_enspace#1\_kern.4em}\_kern.1em}}
+    \_llap{\_ilink[toc:\_the\_tocrefnum]{\_enspace\_numprint{#1}\_kern.4em}\_kern.1em}}
 
-% \_def\_tocdotfill{\_nobreak\_leaders\_hbox to1em{\_hss.\_hss}\_hskip 1em plus1fill\_relax}
+\_nspublic \contentpage ;
 
-\_def\.contentpage{
-    {
-        \_vfill\_break
-        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} %big font
-        \_notoc\_nonum\_insec{\_mtext{toc}}
-        \_maketoc
-    }
-}
-
-% --------------------------------------------------------
-% Character list settings
+    \_doc   
+        \`\characterpage` prints new page with all characters in screenplay automaticly. \OpTeX `\makeindex` is utilized here.
+        Page header and description is language dependent and can be easily edited or new languge definition might be added.
+    \_cod
 
 \_sdef{_mt:charlist:cs}{Postavy}
 \_sdef{_mt:charlist:en}{Characters}
@@ -259,7 +234,7 @@
 \_def\.characterpage{
     {
         \_vfill\_break % New page
-        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} %big fon
+        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} %bigfont
         \_notoc\_nonum\_insec{\_mtext{charlist}} % Page title
         \_mtext{charlistdesc} % Short description
         \_begmulti 2 % Two colums
@@ -268,27 +243,76 @@
     }
 }
 
-% --------------------------------------------------------
+\_nspublic \characterpage ;
 
-% Declaring commands to public
-\_nspublic \rep \pop \act \scene \beginscenar \contentpage \characterpage;
+    \_doc
+        Redefinition of \OpTeX macros for Index. To be precise: `\_printpages` `\_usepgcomma` `\_usepgdash` and `\_pgprint`. 
+        Here we add new index type `h` which does not show origin page. 
+    \_cod
+
+% redefintes pageprinting so usepgcomma, and usepgdash receive pgtype
+\_def\_printpages#1:#2,{% state automaton for compriming pages
+    \_ifx,#1,\_uselastpgnum
+    \_else \_def\_tmpa{#2}%
+        \_ifx\_pgtype\_tmpa \_else
+            \_let\_pgtype=\_tmpa
+            \_uselastpgnum \_usepgcomma{#2} \_pgprint#1:{#2}%
+            \_tmpnum=#1 \_returnfi \_fi
+        \_ifnum\_tmpnum=#1 \_returnfi \_fi
+        \_advance\_tmpnum by1
+        \_ifnum\_tmpnum=#1  \_ifx\_lastpgnum\_undefined \_usepgdash{#2}\_fi
+                            \_edef\_lastpgnum{\_the\_tmpnum:{\_pgtype}}%
+                            \_returnfi \_fi
+        \_uselastpgnum \_usepgcomma{#2} \_pgprint#1:{#2}%
+        \_tmpnum=#1
+        \_relax
+    \_ea\_printpages \_fi
+}
+
+% Disables printing if type is h
+% comma+space between page numbers
+\_def\_usepgcomma#1{\_ifx h#1\_relax\_else\_ifnum\_tmpnum>0, \_fi\_fi} 
+% dash in the <from>--<to> form
+\_def\_usepgdash#1{\_ifx h#1\_relax\_else\_hbox{--}\_fi} 
+
+% Disables page printing when type is h
+\_def\_pgprint #1:#2{%
+    \_ifx ,#2,\_pgprintA{#1}\_returnfi \_fi
+    \_ifx b#2{\_bf \_pgprintA{#1}}\_returnfi \_fi
+    \_ifx i#2{\_it \_pgprintA{#1}}\_returnfi \_fi
+    \_ifx u#2\_pgu{\_pgprintA{#1}}\_returnfi \_fi
+    \_ifx h#2{\_relax}\_returnfi \_fi
+    \_pgprintA{#1}\_relax
+}
 
 \_endnamespace
 \_endcode
 
-\secc List of possible updates
 
-\begitems
+\sec List of possible updates
+
+\begitems\style -
 * Printing act numbers in roman numerals
-*
+* Using `\_isempty` `\_isdefined` macros from \OpTeX/. I could not make them work.
+* Title page is hardcoded with Source pro font and with A4 format in mind. More flexible approach would be welcome.
+* Character page is implemented with automatic printing. Some helper macros for formatting character page manually 
+  with possibly character descriptions. 
 \enditems
 
     \_doc
         \load [doc,scenar]
 
-        \secc Implementation
-        \printdoc     scenar.opm 
-        \nonum\sec Index
+        \tit Painless screenplay formatting\fnotemark1
+        \fnotetext{Available at \url{https://github.com/BasileosFelices/optex-scenar}}
+        \hfill Version: \_scenar_version \par
+        \centerline{\it Filip Špelina, 2023}
+
+        \notoc\nonum\sec Table of contents
+        \maketoc
+        \printdoctail scenar.opm % prints the documantation written after \_endcode
+        \sec Implementation
+        \printdoc scenar.opm % print code + local documentation
+        \sec Index
         \begmulti 3
             \tt \makeindex     
         \endmulti
