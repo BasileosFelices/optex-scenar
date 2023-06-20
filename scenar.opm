@@ -288,6 +288,60 @@
 \_endnamespace
 \_endcode
 
+\sec About `scenar` package
+
+This package provides several macros for easier screenplay formatting. During the development, I discovered that no 
+strict standard for theatre screenplay formatting exists. This is not necessarily the case for screenplays used in the filming industry.
+However, during a film shooting several types of specialized screenplays are made and that is just out of the scope of this work.
+
+I have heard from several sources that formatting theatre screenplay is really up to the discretion of its author. This means that 
+I had to make some design decisions myself that may not be appreciated by everyone. Still, I tried to follow the most
+unspoken rules and implemented the most common features that the script usually utilizes. 
+
+My main goal has always been to design a format that could be comfortably used on stage. I have done this from position of 
+occasional amateur actor. I have discussed my work with both current and former student of dramaturgy.
+
+\sec Making a screenplay
+
+\secc Document setup
+
+First of all you need to include this package with `\load[scenar]`. Afterwards you should use \^`\beginscenar` which sets 
+the document format in the reccomended way. That is A4 paper with 2.5cm borders and source pro font family. Implicit 
+screenplay languge is Czech. You may use `\enlang` for switching to English which is also implemented. 
+
+Interesting nontex standart document setting is \^`\repindent``<dimension>` that changes the distance of character names from
+their dialogue. Currently the maximum charactar name size is around 15 characters. You can safely use this register if necessary.
+`\parskip` register is also utilized for slight spacing between different character lines. This is up to personal preference and
+might be changed. 
+
+\secc Title, content and character pages
+
+Now our document is finally ready. Usually the script will start with three special pages.
+
+\^`\titlepage` prints, as the name suggest, title page of script. However, before using this command you have to specify some parameters.
+\begitems\style I
+\^`\title``{<text>}` sets the name of the sript. This is the only mandatory parameter and has to be defined before \~`\titlepage`. 
+* \^`\subtitle``{<text>}` provides an option to specify subtitle
+* \^`\author``{<text>}` prints written by `<text>`. If you want to specify more authors please include them all in a single line.
+* \^`\basedon``{<text>}` prints based on `<text>`.
+* \^`\date``{<text>}` prints `<text>` to the left side. Specifying month and day is recommended. 
+\enditems
+
+\^`\characterpage` provides a page with automaticly generated list of characters.
+Anyone `<character>` in \~`\rep``<character>` is displayed here. 
+
+\^`\contentpage` prepares Table of Contents page with all acts and scenes listed.
+
+\secc Acts and scenes
+
+
+
+
+\~`\rep``<character>``:``<text>`
+
+\sec Printing documentation
+
+\sec Regarding \OpTeX macros usage
 
 \sec List of possible updates
 
@@ -297,6 +351,7 @@
 * Title page is hardcoded with Source pro font and with A4 format in mind. More flexible approach would be welcome.
 * Character page is implemented with automatic printing. Some helper macros for formatting character page manually 
   with possibly character descriptions. 
+* Off switch for collecting character names to index.
 \enditems
 
     \_doc
