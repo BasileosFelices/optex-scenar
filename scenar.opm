@@ -5,63 +5,76 @@
 \_codedecl \beginscenar {Painless screeplay formatting <\_scenar_version>}
 \_namespace{scenar}
 
+    \_doc
+        \`\beginscenar` sets up and formats the document in the recommended way. 
+        These settings may be overriden. \~`\repindent` holds distance of dialogue from character name.
+    \_cod
+
 \_def\.beginscenar{
     \_initunifonts               
-    \chyph                      % české vzory dělení slov
+    \_cslang                            % české vzory dělení slov
     \_fontfam[source pro]
-    \_margins/1 a4 (2.5,2.5,2.5,2.5)cm   % okraje 2.5 cm, strana A4
+    \_margins/1 a4 (2.5,2.5,2.5,2.5)cm  % okraje 2.5 cm, strana A4
     \_typosize[12/20]
-    \_activettchar"
-    \_hyperlinks\Blue\Green % should be removed - screenplay is inteded for printing
     \_parindent=0pt
-    \_load[vlna]
     \_parskip\_smallskipamount
-    % \_parskip\_medskipamount
     
-    \_newdimen\_scenar_repindent
     \_scenar_repindent=3.5cm
-    % \rightskip = 0pt plus1fill
-}
+    }
 
-% --------------------------------------------------------
-% Helper function - converting to uppercase
-% Working with lua to make \toupper expandable unline \uppercase
-% ! Might break if #1 includes " - todo \luaescapestring does not work
+\_nspublic \beginscenar ;
 
     \_doc
-        \`\toupper``{<text>}` converts `text` to uppercase
+        Helper \`\toupper``{<text>}` converts `text` to uppercase. Uses lua to make
+        itself expandable. Unlike `\uppercase`. 
     \_cod
 
 \_def\.toupper#1{%
     \_directlua{%
-        tex.print(unicode.utf8.upper(\_unexpanded{"#1"}) )%
+        tex.print(unicode.utf8.upper("\_luaescapestring{\_unexpanded{#1}}") )%
     }%
 }
 
-% --------------------------------------------------------
+    \_doc
+        \`\pop` prints description of events in cursive. If used outside of \~`\rep` reads text till the end of paragraph.
+        Redefined behavior in `\rep` later. 
+    \_cod
 
-% Definition of \pop
-% Description of events in cursive
-\_def\.pop#1\_par{\_abovetitle{\_penalty-151}\_smallskip{\_it #1\_par}\_smallskip}
+\_def\.pop#1\_par{%
+    \_abovetitle{\_penalty-151}\_smallskip%
+    {\_it #1\_par}%
+    \_smallskip%
+    }
 
-% --------------------------------------------------------
+\_nspublic \pop ;
 
-% Definition of \rep
-% Dialogue
-% Changes \pop inside to include ()
+    \_doc
+        \`\rep``<character name>:<text>` for printing dialogue. Reads everything till the end of paragraph. 
+        Redefines \~`\pop` behaviour to wrap event description as `(text)`. Furthermore saves character name for printing character list.
+        This uses inserting into \OpTeX index with `\iitype {h}` for hiding location page number. See \~`\characterpage`
+
+        \`\repindent` holds distance of character name from dialogue. If the character names are longer than +- 14 characters you may need to increse this.
+    \_cod
+
+\_newdimen\_scenar_repindent
 
 \_def\.rep#1:#2\_par{{\_def\pop##1{{\_it(##1)}}%
                         \_nsprivate \pop ;
-                    \_iitype{h}\_iindex{\.toupper{#1}}% saves character name to character list / iitype is h for hiding loc number
+                    \_iitype{h}\_iindex{\.toupper{#1}} % save to character list
                     \_leavevmode\_hbox to \_the\.repindent {\.toupper{#1}\_hfil}%
                     \_hangindent=\_the\.repindent\_hangafter=1%
                     #2\_par}}
 
+\_nspublic \rep \repindent ;
 
-% --------------------------------------------------------
-% \act prints Act with possible name
+    \_doc
+        \`\act``<act name>` starts new act with with act names which is read till the end of line.
+        Implementation uses \OpTeX `\chap` with several adjustments. We redefine following: 
+        `\_chapfont` `\_chapx` `\_printchap` and `\_mtext` definition for chapter header in English and Czech.
+        Support for more languages can be easily added, see 
+        \ulink[http://petr.olsak.net/ftp/olsak/optex/optex-doc.pdf#cs%3A_mtext]{\OpTeX documentation}.
+    \_cod
 
-% definiton of \act - converts to \chap
 \_eoldef\.act#1{%
     \_inchap{#1}%
 }
@@ -76,19 +89,24 @@
 % redefinition of chapX - we do not reset scene counters in new acts
 \_def \_chapx {\_secx\_lfnotenum=0}
 
-% redefinition of \printchap - smaller belotitle skip; removed upper glue 
+% redefinition of \printchap - smaller belowtitle skip; removed upper glue 
 \_def\_printchap #1{\_vfill\_supereject \_prevdepth=0pt
-    % \_topglue\_medskipamount % shifted by topkip+\medskipamount
+        % !!OFF \_topglue\_medskipamount % shifted by topkip+\medskipamount
     {\_chapfont \_noindent \_mtext{chap} \_printrefnum[@]\_par
     \_nobreak\_smallskip
     \_noindent \_raggedright #1\_nbpar}\_mark{}%
     \_nobreak \_belowtitle{\_smallskip}%
 }
 
-% possible todo: print act numbers roman numerals
+\_nspublic \act ;
 
-% --------------------------------------------------------
-% \scene prints scene with possible name
+    \_doc
+        \`\scene``<scene name>` starts new act with with act names which is read till the end of line.
+        Implementation uses \OpTeX `\sec` with several adjustments. We redefine following: 
+        `\_secfont` `\_thesecnum` `\_printsec`. We add new `\_mtext{scene}` values for printing scene header in English and Czech.
+        Support for more languages can be easily added, see 
+        \ulink[http://petr.olsak.net/ftp/olsak/optex/optex-doc.pdf#cs%3A_mtext]{\OpTeX documentation}.
+    \_cod
 
 % definiton of \scene - converts to \sec
 \_eoldef\.scene#1{%
@@ -103,7 +121,6 @@
 \_def \_secfont {\_scalemain\_typoscale[\_magstep2/\_magstep2]}
 
 % redefinition of _thesecnum / We dont wanto to print act number
-% \_def \_thechapnum {\_the\_chapnum}
 \_def \_thesecnum {\_the\_secnum}
 
 % redefinition of sec printing - Includes 'scena'
@@ -111,10 +128,14 @@
 % \isempty does not work here ???
 \_def\_printsec#1{\_par
     \_abovetitle{\_penalty-400}{\_bigskip}
-    {\_secfont \_noindent \_raggedright \_printrefnum[\_mtext{scene} @\_if\_relax#1\_relax\_else\_enskip---\_enskip\_fi]#1\_nbpar}\_insertmark{#1}%
+    {\_secfont \_noindent \_raggedright 
+    \_printrefnum[\_mtext{scene} @\_if\_relax#1\_relax\_else\_enskip---\_enskip\_fi]%
+    #1\_nbpar}\_insertmark{#1}%
     \_nobreak\_belowtitle{\_medskip}%
     \_firstnoindent
 }
+
+\_nspublic \scene ;
 
 % --------------------------------------------------------
 % Index adjustments for character list
@@ -139,8 +160,10 @@
 }
 
 % Disables printing if type is h
-\_def\_usepgcomma#1{\_ifx h#1\_relax\_else\_ifnum\_tmpnum>0, \_fi\_fi} % comma+space between page numbers
-\_def\_usepgdash#1{\_ifx h#1\_relax\_else\_hbox{--}\_fi} % dash in the <from>--<to> form
+% comma+space between page numbers
+\_def\_usepgcomma#1{\_ifx h#1\_relax\_else\_ifnum\_tmpnum>0, \_fi\_fi} 
+% dash in the <from>--<to> form
+\_def\_usepgdash#1{\_ifx h#1\_relax\_else\_hbox{--}\_fi} 
 
 % Disables page printing when type is h
 \_def\_pgprint #1:#2{%
@@ -209,14 +232,15 @@
 \_sdef{_tocl:2}#1#2#3{\_llaptoclink{\_mtext{scene} #1}{#2}\_tocdotfill\_pgn{#3}\_tocpar}
 
 % Moved left side with kern 1.2cm to keep act and scenes in page layout
-\_def\_llaptoclink#1{\_noindent\_kern1.2cm\_llap{\_ilink[toc:\_the\_tocrefnum]{\_enspace#1\_kern.4em}\_kern.1em}}
+\_def\_llaptoclink#1{\_noindent\_kern1.2cm%
+    \_llap{\_ilink[toc:\_the\_tocrefnum]{\_enspace#1\_kern.4em}\_kern.1em}}
 
 % \_def\_tocdotfill{\_nobreak\_leaders\_hbox to1em{\_hss.\_hss}\_hskip 1em plus1fill\_relax}
 
 \_def\.contentpage{
     {
         \_vfill\_break
-        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} % Bigger font, matching with Act
+        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} %big font
         \_notoc\_nonum\_insec{\_mtext{toc}}
         \_maketoc
     }
@@ -228,13 +252,14 @@
 \_sdef{_mt:charlist:cs}{Postavy}
 \_sdef{_mt:charlist:en}{Characters}
 
-\_sdef{_mt:charlistdesc:cs}{Seznam všech postav díla se svou vlastní replikou. Postavy jsou vytištěné v abecedním pořadí.\_bigskip}
+\_sdef{_mt:charlistdesc:cs}{Seznam všech postav díla se svou vlastní replikou. 
+                            Postavy jsou vytištěné v abecedním pořadí.\_bigskip}
 \_sdef{_mt:charlistdesc:en}{List of characters, alphabeticly sorted.\_bigskip}
 
 \_def\.characterpage{
     {
         \_vfill\_break % New page
-        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} % Bigger font, matching with Act
+        \_def \_secfont {\_scalemain\_typoscale[\_magstep3/\_magstep3]} %big fon
         \_notoc\_nonum\_insec{\_mtext{charlist}} % Page title
         \_mtext{charlistdesc} % Short description
         \_begmulti 2 % Two colums
@@ -249,5 +274,27 @@
 \_nspublic \rep \pop \act \scene \beginscenar \contentpage \characterpage;
 
 \_endnamespace
-
 \_endcode
+
+\secc List of possible updates
+
+\begitems
+* Printing act numbers in roman numerals
+*
+\enditems
+
+    \_doc
+        \load [doc,scenar]
+
+        \secc Implementation
+        \printdoc     scenar.opm 
+        \nonum\sec Index
+        \begmulti 3
+            \tt \makeindex     
+        \endmulti
+        \bye
+    \_cod
+
+
+\endinput
+\bye
