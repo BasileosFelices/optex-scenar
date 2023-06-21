@@ -404,7 +404,6 @@ You should run this command three times in order to properly generate Table of C
 
 Beware `\docgen` is first included in TeXlive 2023. If you encounter problems please ensure you have last \OpTeX/ version.
 
-
 \sec List of possible updates
 
 \begitems\style -
@@ -416,12 +415,30 @@ Beware `\docgen` is first included in TeXlive 2023. If you encounter problems pl
 * Off switch for collecting character names to index.
 \enditems
 
+\sec Credits and used resources
+
+My thanks goes to Zuzana Novotná and Kristina Kalendová who discussed this work with me and 
+pointed me the right way. 
+
+\ulink[https://www.wlyceum.cz/web/soubory/eichlerova.pdf]{Jak napsat filmový scénář. Eichlerová Barbora 2013}
+
+\ulink[http://www.scenar.cz/]{Scenar.cz}
+
+\ulink[http://petr.olsak.net/ftp/olsak/optex/optex-doc.pdf]{\OpTeX/ documantation}
+
+\ulink[https://petr.olsak.net/ftp/olsak/optex/math-doc.pdf]{Documentation of math.opm}
+
+\ulink[http://petr.olsak.net/tpp.html]{\TeX/ pro pragmatiky}
+
+\ulink[http://petr.olsak.net/tbn.html]{\TeX/book naruby}
+
     \_doc
         \load [doc,scenar]
 
         \tit Painless screenplay formatting\fnotemark1
         \fnotetext{Available at \url{https://github.com/BasileosFelices/optex-scenar}}
         \hfill Version: \_scenar_version \par
+        \centerline{semestrální práce BI-\TeX/ LS 2022/2023}
         \centerline{\it Filip Špelina, 2023}
 
         \notoc\nonum\sec Table of contents
