@@ -307,7 +307,7 @@ occasional amateur actor. I have discussed my work with both current and former 
 
 First of all you need to include this package with `\load[scenar]`. Afterwards you should use \^`\beginscenar` which sets 
 the document format in the reccomended way. That is A4 paper with 2.5cm borders and source pro font family. Implicit 
-screenplay languge is Czech. You may use `\enlang` for switching to English which is also implemented. 
+screenplay language is Czech. You may use `\enlang` for switching to English which is also implemented. 
 
 Interesting non\TeX/ standard document setting is \^`\repindent``<dimension>` that changes the distance of character names from
 their dialogue. Currently the maximum charactar name size is around 15 characters. You can safely use this register if necessary.
