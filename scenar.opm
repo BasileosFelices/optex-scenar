@@ -57,6 +57,7 @@
     \_cod
 
 \_newdimen\_scenar_repindent
+\_scenar_repindent=4cm % implicit if beginscenar is not used
 
 \_def\.rep#1:#2\_par{{\_def\pop##1{{\_it(##1)}}%
                         \_nsprivate \pop ;
@@ -431,6 +432,8 @@ pointed me the right way.
 \ulink[http://petr.olsak.net/tpp.html]{\TeX/ pro pragmatiky}
 
 \ulink[http://petr.olsak.net/tbn.html]{\TeX/book naruby}
+
+\ulink[https://gitlab.fit.cvut.cz/barlaada/tex]{Background grid for \OpTeX/ documents (by Adam Barla)}
 
     \_doc
         \load [doc,scenar]
